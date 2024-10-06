@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroLabs - Diagnóstico de Sangre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-size: 1.1em;
+        }
+        input[type="file"]:hover {
+            background-color: #444;
+            cursor: pointer;
+        }
+        button {
+            background-color: #5c5c5c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        .progress {
+            background-color: #444;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background-color: #76c7c0;
+            height: 20px;
+            width: 0;
+            transition: width 0.5s;
+        }
+        .diagnostic-result {
+            margin-top: 20px;
+            display: none;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AstroLabs</h1>
+    <div class="container">
+        <input type="file" id="imageInput" accept="image/*">
+        <button id="diagnoseButton">Diagnosticar</button>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <img id="imagePreview" src="" alt="Vista previa de la imagen" style="display:none;">
+        <div class="diagnostic-result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const imgPreview = document.getElementById('imagePreview');
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = 'block'; // Mostrar la imagen cuando se cargue
+            }
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('diagnoseButton').addEventListener('click', function() {
+            const progressBar = document.getElementById('progressBar');
+            const resultDiv = document.getElementById('result');
+            const minDelay = 6000; // 6 seconds
+            const maxDelay = 9000; // 9 seconds
+            const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+
+            progressBar.style.width = '0%'; // Reset progress bar
+            resultDiv.style.display = 'none'; // Hide previous result
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = progress + '%';
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showDiagnosis();
+                    }, 500); // Delay before showing diagnosis
+                }
+            }, delay / 100);
+        });
+
+        function showDiagnosis() {
+            const filePath = document.getElementById('imageInput').files[0].name;
+            let diagnosis = '';
+            let info = '';
+
+            if (filePath.includes("Sano")) {
+                diagnosis = "Resultado: Saludable";
+                info = "El análisis indica que no hay signos de enfermedades. Mantenga un estilo de vida saludable.";
+            } else if (filePath.includes("Leucemia")) {
+                diagnosis = "Resultado: Positivo para Leucemia";
+                info = "La leucemia es un tipo de cáncer que afecta a la sangre y la médula ósea. Requiere atención médica inmediata.";
+            } else if (filePath.includes("VIH")) {
+                diagnosis = "Resultado: Positivo para VIH";
+                info = "El VIH (Virus de Inmunodeficiencia Humana) afecta el sistema inmunológico. Consulte a un médico para un tratamiento adecuado.";
+            } else {
+                diagnosis = "Resultado: Desconocido";
+                info = "No se pudo determinar la condición de salud. Asegúrese de seleccionar la imagen correcta.";
+            }
+
+            const detectionInfo = "La detección se basa en el análisis de la imagen de la muestra de sangre.";
+            document.getElementById('result').innerHTML = `<strong>${diagnosis}</strong><br>${info}<br><br><strong>Cómo se detectó:</strong> ${detectionInfo}`;
+            document.getElementById('result').style.display = 'block'; // Show the result
+        }
+    </script>
+</body>
+</html>
