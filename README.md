@@ -1,6 +1,6 @@
 # AstroLabs - Blood Diagnostic Tool
 
-AstroLabs is a web-based application designed for visual blood diagnostics. It allows users to upload images of blood samples and receive diagnoses for specific conditions such as Leukemia and HIV.
+AstroLabs is an advanced tool for the remote analysis of biological samples in space. Its goal is to provide instant health diagnostics to astronauts through an intelligent system that utilizes three interconnected devices: one for extracting blood, another for analyzing it, and a third for processing data using AI to generate a virtual replica of the biological sample. This all occurs without the need to physically return the sample to Earth, efficiently sending observations and detailed data. This website is a simulation of how the AstroLabs AI would function, focusing on pattern recognition and diagnosis.
 
 ## How It Works
 
