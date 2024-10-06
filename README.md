@@ -12,5 +12,5 @@ AstroLabs is a web-based application designed for visual blood diagnostics. It a
    - Explanation of how the diagnosis was made.
    - Additional information about the condition.
 
-**Note**: This repository contains only HTML files due to time constraints.
+**Note**: This repository contains only HTML files and empty CSS due to time constraints.
 
